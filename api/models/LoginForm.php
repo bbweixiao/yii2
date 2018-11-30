@@ -2,6 +2,7 @@
 namespace api\models;
 
 use yii\base\Model;
+use Yii;
 
 /**
  * Login form
@@ -65,6 +66,7 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $this->trigger(self::GET_API_TOKEN);
+            Yii::$app->getUser()->login($this->getUser(), 0);
             return $this->_user;
         } else {
             return null;

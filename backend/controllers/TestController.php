@@ -8,6 +8,7 @@ use common\models\TestSeach;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use rbac\components\Configs;
 
 /**
  * TestController implements the CRUD actions for Test model.
@@ -37,6 +38,10 @@ class TestController extends Controller
      */
     public function actionIndex()
     {
+        $config = Configs::instance();
+        /* @var $manager \yii\rbac\BaseManager */
+        $manager = Configs::authManager();
+        $route= $manager->getPermissionsByUser(1);
         $searchModel = new TestSeach();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         //var_dump($dataProvider);

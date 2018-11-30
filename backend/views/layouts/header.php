@@ -32,7 +32,7 @@ use yii\helpers\Html;
                             <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
                                  alt="User Image"/>
                             <p>
-                                <?= Yii::$app->user->identity->username ?> - Web Developer
+                               <!-- --><?= Yii::$app->user->identity->username ?> - Web Developer
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>

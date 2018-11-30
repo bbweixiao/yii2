@@ -16,8 +16,15 @@ return [
         'admin' => [
             'class' => 'mdm\admin\Module',
         ],
+        'rbac' => [
+            'class' => 'rbac\Module',
+        ],
+        'v1' => [
+            'class' => 'api\modules\v1\Module',
+        ],
     ],
     'aliases' => [
+        '@rbac' => '@backend/modules/rbac',
         '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',
     ],
 
@@ -27,7 +34,8 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'rbac\models\User',
+            'loginUrl' => array('/rbac/user/login'),
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -66,9 +74,15 @@ return [
         ],
     ],
     'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
+        'class' => 'rbac\components\AccessControl',
         'allowActions' => [
             //这里是允许访问的action，不受权限控制
+  /*          "test/*",
+            "site/*",
+            "gii/*",
+            "admin/*",
+            "rbac/*",*/
+            "rbac/*",
         ]
     ],
     'params' => $params,

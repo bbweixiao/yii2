@@ -5,7 +5,6 @@ $params = array_merge(
     require __DIR__ . '/params.php',
     require __DIR__ . '/params-local.php'
 );
-
 return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
@@ -22,6 +21,7 @@ return [
     ],
     'aliases' => [
         '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',
+        '@rbac' => '@backend/modules/rbac',
     ],
 
     'components' => [
@@ -82,7 +82,6 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/goods'],
-
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -99,10 +98,15 @@ return [
         ],
     ],
     'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
+        'class' => 'rbac\components\AccessControl',
         'allowActions' => [
             //这里是允许访问的action，不受权限控制
-            'v1/*',
+            /*          "test/*",
+                      "site/*",
+                      "gii/*",
+                      "admin/*",
+                      "rbac/*",*/
+            "rbac/*",
         ]
     ],
     'params' => $params,

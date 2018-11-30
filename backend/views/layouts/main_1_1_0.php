@@ -1,7 +1,10 @@
 <?php
-use yii\helpers\Html;
-use dmstr\widgets\Alert;
+use yii\helpers\Html;;
+use backend\models\Menu;
+$context = $this->context;
 
+$route = $context->action->getUniqueId()?:$context->getUniqueId().'/'.$context->defaultAction;
+$allMenu = Menu::getMenusAll($route); // 获取后台栏目
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -44,7 +47,42 @@ if (Yii::$app->controller->action->id === 'login') {
 
         </header>
         <aside class="main-sidebar">
+            <section class="sidebar">
+                <!--左菜单-->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <?php if(!empty($allMenu['main']) && is_array($allMenu['main'])):?>
+                        <?php foreach ($allMenu['main'] as $menu): ?>
+                            <li class="treeview">
+                                <a href="#"><i class="fa fa-fw fa-black-tie"></i> <span> <?=$menu['title']?></span>
+                                    <span class="pull-right-container">
+                                   <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                                </a>
+                            <?php if(!empty($menu['_child']) && is_array($menu['_child'])):?>
 
+                               <ul class="treeview-menu" >
+                                <?php foreach ($menu['_child'] as $child): ?>
+                                    <li  >
+                                        <a href="<?=\yii\helpers\Url::toRoute($child['url'])?>">
+                                            <i class="fa fa-fa fa-circle-o"></i>
+                                            <span><?=$child['title']?></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                                   <?php endif; ?>
+                                </ul>
+
+                            </li>
+                        <!--    <li class="classic-menu-dropdown <?php /*if (isset($menu['class'])) {echo 'active';} */?>">
+                                <a href="<?/*=\yii\helpers\Url::toRoute($menu['url'])*/?>">
+                                    <?/*=$menu['title']*/?>
+                                    <?php /*if (isset($menu['class'])) {echo '<span class="selected"></span>';} */?>
+                                </a>
+                            </li>-->
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
+            </section>
         </aside>
 
         <div class="content-wrapper">
